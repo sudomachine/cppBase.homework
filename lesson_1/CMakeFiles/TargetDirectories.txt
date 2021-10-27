@@ -1,0 +1,3 @@
+/home/sudakov/Documents/GeekBrains/homework/cppBase/lesson_1/CMakeFiles/rebuild_cache.dir
+/home/sudakov/Documents/GeekBrains/homework/cppBase/lesson_1/CMakeFiles/edit_cache.dir
+/home/sudakov/Documents/GeekBrains/homework/cppBase/lesson_1/CMakeFiles/progTran.dir
