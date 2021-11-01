@@ -22,6 +22,14 @@
  */
 
 #include <iostream>
+extern int gA;
+extern int gB;
+extern int gC;
+extern int gD;
+
+// for 4 task
+//extern const int classmQ = 6;
+//extern int classmAge[classmQ] = {16, 18, 19, 19, 21, 15};
 
 int main()
 {
@@ -63,6 +71,57 @@ int main()
   std::cout << "Result of comparison: " << resultInt << std::endl;
 
   // TASK 3*
+  std::cout << "########## TASK 3 - array 3x3x3" << std::endl;
+
+  // 3d array and pointer init
+  const int arrSize = 3;
+  int arr3d[arrSize][arrSize][arrSize] = {0};
+  int* pArr = &arr3d[0][0][0];
+
+  for (int x = 0; x < arrSize; x++)
+    {
+      for (int y = 0; y < arrSize; y++)
+	{
+	  for (int z = 0; z < arrSize; z++)
+	    {
+	      *pArr = x+y+z;
+	      pArr++;
+	    }
+	}
+    }
+  std::cout << std::endl;
+  
+  // print to screen
+  pArr = &arr3d[0][0][0];
+  for (int x = 0; x < arrSize; x++)
+    {
+      for (int y = 0; y < arrSize; y++)
+	{
+	  for (int z = 0; z < arrSize; z++)
+	    {
+	      std::cout << *pArr << " ";
+	      pArr++;
+	    }
+	}
+    }
+
+  // TASK 4
+  std::cout << "########## TASK 4 - extern using" << std::endl;
+  /*
+  classmAge[0] = 18;
+  classmAge[1] = 20;
+  classmAge[2] = 16;
+  classmAge[3] = 18;
+  classmAge[4] = 21;
+  classmAge[5] = 19;
+  
+  for (int i = 0; i < classmQ; i++)
+    {
+      std::cout << classmAge[i] << std::endl;
+      }*/
+  //a1 = 0;
+  //std:: cout << a1;
+  //gA = 100;
   
   return 0;
 }
