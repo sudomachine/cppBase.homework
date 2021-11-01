@@ -119,7 +119,7 @@ int main()
 7|8|9
       */
       // PRINT FIELD TO CONSOLE
-      system("clear");
+      system("clear"); // COMMENT it to see TASK 1,2,3
       for (int i = 0; i < 9; i++)
 	{
 	  std::cout << g1.playersSteps[i];
