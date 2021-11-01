@@ -26,6 +26,7 @@
 // этой структуры.
 
 #include <iostream>
+#include <cstdlib>
 
 int main()
 {
@@ -80,8 +81,7 @@ int main()
   struct TTTGame
   {
     unsigned int playerMove : 1; // X or O will be move first
-    unsigned int winner : 1; // winner is first(X) or second(O) player
-    unsigned int draw : 1; // default 1
+    unsigned int winner : 2; // winner is first(X) or second(O) player
     int victOpt[8][3] = {
 		   {0,1,2},
 		   {3,4,5},
@@ -92,44 +92,149 @@ int main()
 		   {0,4,8},
 		   {2,4,6}
     }; // victory options // 100 bytes
-    //int xCells[5] = {9}; // all array alements are 9; // 20 bytes
-    //int oCells[5] = {9}; // indexes of cells will be write here // 20 bytes
-    char playersSteps[9] = {' '};
+    char playersSteps[9] = {48};  // init by '0'
   };
 
   TTTGame g1;
-  std::cout << "Size of TTTGame struct: " << sizeof(g1) << std::endl;
-  /*
-0|1|2
--+-+-
-3|4|5
--+-+-
-6|7|8
-   */
-  // move choice
-  g1.playerMove = 0; // X first move
+  // g1.playersSteps init by 1,2,3...9 char
   for (int i = 0; i < 9; i++)
     {
-      // move
-      if (g1.playerMove == 0)
-	// X move
-	{
-	  std::cin >> g1.playersSteps[i];
-	}
-      else if (g1.playerMove == 1)
-	// O move
-	{
-	  std::cin >> g1.playersSteps[i];
-	}
-      // win check
-      //break;
-      // print field to console
+      g1.playersSteps[i] = 49+i;
+    }
+  std::cout << "Size of TTTGame struct: " << sizeof(g1) << std::endl;
+  
+  // MOVE CHOICE
+  g1.playerMove = 0; // X first move (0 or 1)
+  g1.winner = 2; // draw default
+  int tmpVar = 0; // tmp variable for check user input (1,2,3...9)
+  
+  // GAME
+  for (int i = 0; i < 9; i++)
+    {
+      /*
+1|2|3
+-+-+-
+4|5|6
+-+-+-
+7|8|9
+      */
+      // PRINT FIELD TO CONSOLE
+      system("clear");
       for (int i = 0; i < 9; i++)
 	{
 	  std::cout << g1.playersSteps[i];
-	  if (((i+1)%3) == 0) {std::cout << std::endl;}
+	  // wall between columns
+	  if (((i%3) == 0) || (((i-1)%3) == 0)) { std::cout << '|'; }
+	  // new line
+	  if (((i+1)%3) == 0) { std::cout << std::endl; }
+	  // wall between rows
+	  if ((i == 2) || (i == 5)) { std::cout << "-+-+-" << std::endl; }
+	}
+      // MOVE
+      // user input check
+      while (true)
+	{
+	  // user input
+	  if (g1.playerMove == 0)
+	    { std::cout << "X user move: "; }
+	  else
+	    { std::cout << "O user move: "; }
+	  std::cin >> tmpVar;
+	  // input check 1 (1,2,3...9)
+	  if ((tmpVar < 1) || (tmpVar > 9))
+	    {
+	      std::cout << "ERROR: Enter cell number from game field only!" << std::endl;
+	      continue;
+	    }
+	  // input check 3 (FREE cell number from game field)
+	  else
+	    {
+	      if (g1.playersSteps[tmpVar-1] == 'X' ||
+		  g1.playersSteps[tmpVar-1] == 'O')
+		{
+		  std::cout << "ERROR: Enter free cell number only!" << std::endl;
+		  continue;
+		}
+	      // correct user input
+	      else
+		{
+		  std::cout << "Your move is done!" << std::endl;
+		  break;
+		}
+	    }
+	}
+      // X MOVE
+      if (g1.playerMove == 0)
+	{
+	  g1.playersSteps[tmpVar-1] = 'X';
+	  g1.playerMove = 1;
+	  // X WINNER CHECK
+	  if (i > 2)
+	    {
+	      for (int i = 0; i < 8; i++)
+		{
+		  if (g1.playersSteps[g1.victOpt[i][0]] == 'X' &&
+		      g1.playersSteps[g1.victOpt[i][1]] == 'X' &&
+		      g1.playersSteps[g1.victOpt[i][2]] == 'X')
+		    {
+		      g1.winner = 0;
+		      break;
+		    }
+		}
+	    }
+	}
+      // O MOVE
+      else if (g1.playerMove == 1)
+	{
+	  g1.playersSteps[tmpVar-1] = 'O';
+	  g1.playerMove = 0;
+	  // O WINNER CHECK
+	  if (i > 2)
+	    {
+	      for (int i = 0; i < 8; i++)
+		{
+		  if (g1.playersSteps[g1.victOpt[i][0]] == 'O' &&
+		      g1.playersSteps[g1.victOpt[i][1]] == 'O' &&
+		      g1.playersSteps[g1.victOpt[i][2]] == 'O')
+		    {
+		      g1.winner = 1;
+		      break;
+		    }
+		}
+	    }
+	}
+      // END GAME CHECK
+      if (g1.winner == 0)
+	{
+	  system("clear");
+	  std::cout << "WINNER is X-player!" << std::endl;
+	  break;
+	}
+      else if (g1.winner == 1)
+	{
+	  system("clear");
+	  std::cout << "WINNER is O-player!" << std::endl;
+	  break;
 	}
     }
+  // DRAW
+  if (g1.winner == 2)
+    {
+      system("clear");
+      std::cout << "DRAW!" << std::endl;
+      
+    }
+  // PRINT FIELD TO CONSOLE
+      for (int i = 0; i < 9; i++)
+	{
+	  std::cout << g1.playersSteps[i];
+	  // wall between columns
+	  if (((i%3) == 0) || (((i-1)%3) == 0)) { std::cout << '|'; }
+	  // new line
+	  if (((i+1)%3) == 0) { std::cout << std::endl; }
+	  // wall between rows
+	  if ((i == 2) || (i == 5)) { std::cout << "-+-+-" << std::endl; }
+	}
   
   // TASK 5**
   std::cout << "#########TASK 5 - " << std::endl;
