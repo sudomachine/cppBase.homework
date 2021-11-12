@@ -27,6 +27,7 @@ true. Абстрактная граница показана символами 
  */
 
 #include <iostream>
+#include <iterator>
 
 // task 1
 void printArray (double* dArray, const size_t ARRAY_SIZE)
@@ -82,6 +83,55 @@ void arrayInit(int *array)
     }
 }
 
+// task 4
+void arrayShift(int* array, const size_t SIZE, int n)
+{
+  // take ptr to array, size and int n
+  // shifts all elements of array by n positions
+
+  for (int i = 0; i < SIZE; i++)
+    {
+      array[i] += n;
+    }
+}
+
+// optional func for task 5 - sum of array elements from i1 to i2
+int amountArrElem(int* array, int i1, int i2)
+{
+  // take ptr to array, first index and second index
+  // returns amount of array elements from i1 to i2
+
+  int amount = 0;
+  for (i1; i1 <= i2; i1++)
+    {
+      amount += array[i1];
+    }
+  return amount;
+}
+
+// task 5
+bool checkBalance(int *array, const size_t SIZE)
+{
+  // take ptr to array and size
+  // return true or false
+
+  int leftSide;
+  int rightSide;
+  for (int i = 0; i < SIZE-1; i++)
+    {
+      // balance counting
+      leftSide = amountArrElem(array, 0, i);
+      rightSide = amountArrElem(array, i+1, SIZE-1);
+      // left and right sides comparison
+      if (leftSide == rightSide)
+	{
+	  return true; // exit from func (true)
+	}
+      // else - next step of comparison
+    }
+  return false; // exit from func (false)
+}
+
 int main()
 {
   // task 1
@@ -115,8 +165,33 @@ int main()
   // prints initialized array
   for (int i = 0; i < ARR_SIZE_3; i++) { std::cout << array[i] << ' '; }
   std::cout << std::endl;
-  return 0;
 
   // task 4
-  
+  std::cout << "##### TASK 4 - Array Offset" << std::endl;
+  arrayShift(array, ARR_SIZE_3, -5); // array from task 3
+  for (auto el: array) { std::cout << el << ' '; }
+  std::cout << std::endl;
+
+  // task 5
+  std::cout << "##### TASK 5 - Check Balance" << std::endl;
+  const size_t SIZE_1 = 5;
+  const size_t SIZE_2 = 2;
+  const size_t SIZE_7 = 1;
+  int testBalance1[SIZE_1] = {1, 2, 3, 4, 2}; // true
+  int testBalance2[SIZE_2] = {1, 2}; // false
+  int testBalance3[SIZE_1] = {1,1,1,2,1}; // true
+  int testBalance4[SIZE_1] = {2,1,1,2,1}; // false
+  int testBalance5[SIZE_1] = {10,1,2,3,4}; // true
+  int testBalance6[SIZE_1] = {1,2,3,4,10}; // true
+  int testBalance7[SIZE_7] = {10}; // false
+
+  std::cout << std::boolalpha;
+  std::cout << "{1, 2, 3, 4, 2} -> " << checkBalance(testBalance1, SIZE_1) << std::endl;
+  std::cout << "{1, 2} -> " << checkBalance(testBalance2, SIZE_2) << std::endl;
+  std::cout << "{1,1,1,2,1} -> " << checkBalance(testBalance3, SIZE_1) << std::endl;
+  std::cout << "{2,1,1,2,1} -> " << checkBalance(testBalance4, SIZE_1) << std::endl;
+  std::cout << "{10,1,2,3,4} -> " << checkBalance(testBalance5, SIZE_1) << std::endl;
+  std::cout << "{1,2,3,4,10} -> " << checkBalance(testBalance6, SIZE_1) << std::endl;
+  std::cout << "{10} -> " << checkBalance(testBalance7, SIZE_7) << std::endl;
+  return 0;
 }
