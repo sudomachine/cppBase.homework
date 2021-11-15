@@ -99,7 +99,7 @@ void task3()
       std::cin >> fileName;
       // open file
       std::ofstream fileObj;
-      fileObj.open(fileName);
+      fileObj.open(fileName + ".txt");
       if (fileObj.is_open())
 	{
 	  // write to file a set of random numbers
