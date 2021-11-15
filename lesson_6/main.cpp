@@ -36,9 +36,9 @@ int addDegreeOfTwo(int degree);
 
 int addRandNum(int randNum);
 
-typedef int (*ExeFuncOverEl)(int); // execute function over elements
+typedef int (*ExeFuncOverEl)(int); // execute function over elements of array
 
-bool initArray(int* array, size_t size, ExeFuncOverEl pFunc);
+bool initArray(int* array, size_t size, ExeFuncOverEl generateEl);
 
 void task1()
 {
