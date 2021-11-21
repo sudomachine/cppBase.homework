@@ -103,7 +103,7 @@ void task3()
 void task4()
 {
   std::cout << "##### TASK 4" << std::endl;
-  // struct initialization
+  // memory allocation and struct initialization
   Sudakov::Employee* andrey = new Sudakov::Employee{"Sudakov", "Andrey", 25, 40'000.00f};
   // print to console
   std::cout << "FirstName: " << andrey->firstName << std::endl \
@@ -120,6 +120,8 @@ void task4()
       fstrm.write((char*)&andrey, sizeof(andrey));
       fstrm.close();
     }
+  // memory freeing
+  delete andrey;
 }
 
 void task5()
