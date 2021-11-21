@@ -30,13 +30,10 @@ Cохраните эту структуру в текстовый файл.
 
 #include "mylib.h"
 #include <iostream>
+#include <fstream>
 #define IS_INCLUDED(USER_NUMBER, RIGHT_LIMIT_EXCLUDED) \
   ((USER_NUMBER >= 0) && (USER_NUMBER < RIGHT_LIMIT_EXCLUDED))
-#define ARRAY_SIZE 5
-#define SWAP_INT(NUMBER_1, NUMBER_2) \
-  TEMP = NUMBER_1; \
-  NUMBER_1 = NUMBER_2; \
-  NUMBER_2 = TEMP;
+#define ARRAY_SIZE 6
 
 void task1()
 {
@@ -45,10 +42,12 @@ void task1()
   const size_t SIZE = 5;
   float arr[SIZE] = {0.0f};
   // func using
-  initArray(arr, SIZE);
-  printArray(arr, SIZE);
-  std::cout << "Amount of positive elements: " << countPosEl(arr, SIZE) << std::endl;
-  std::cout << "Amount of negative elements: " << countNegEl(arr, SIZE) << std::endl;
+  Sudakov::initArray(arr, SIZE);
+  Sudakov::printArray(arr, SIZE);
+  std::cout << "Amount of positive elements: " \
+	    << Sudakov::countPosEl(arr, SIZE) << std::endl;
+  std::cout << "Amount of negative elements: " \
+	    << Sudakov::countNegEl(arr, SIZE) << std::endl;
 }
 
 void task2()
@@ -67,16 +66,75 @@ void task2()
 
 void task3()
 {
-  int a = 10, b = 20;
-  SWAP_INT(a,b);
-  std::cout << a << " " << b << std::endl;
+  std::cout << "##### TASK 3" << std::endl;
+  int userArray[ARRAY_SIZE] = {0};
+  // user input
+  std::cout << "Enter values of array elements:" << std::endl;
+  for (int i = 0; i < ARRAY_SIZE; i++)
+    {
+      std::cout << i+1 << " element >> ";
+      std::cin >> userArray[i];
+      }
+  // sort and print functions using
+  Sudakov::printArray(userArray, ARRAY_SIZE);
+  Sudakov::sortArray(userArray, ARRAY_SIZE);
+  Sudakov::printArray(userArray, ARRAY_SIZE);
+  /*
+  // TESTS
+  const int TEST_ARRAY_SIZE = 7;
+  const int Q_TEST = 6;
+  int testArray[Q_TEST][TEST_ARRAY_SIZE] = {
+					    {},
+					    {0,0,0,0,0,0,0},
+					    {-1,-7,-9,-100,-7,-1,-7},
+					    {1,6,3,1000,1,3,1},
+					    {0,6,-10,0,1,-1,9},
+					    {10,5,10,5,-1,-1,0}};
+  for (int i = 0; i < Q_TEST; i++)
+    {
+      std::cout << "TEST " << i+1 << std::endl;
+      Sudakov::printArray(testArray[i], TEST_ARRAY_SIZE);
+      Sudakov::sortArray(testArray[i], TEST_ARRAY_SIZE);
+      Sudakov::printArray(testArray[i], TEST_ARRAY_SIZE);
+    }
+  */
+}
+
+void task4()
+{
+  std::cout << "##### TASK 4" << std::endl;
+  // struct initialization
+  Sudakov::Employee* andrey = new Sudakov::Employee{"Sudakov", "Andrey", 25, 40'000.00f};
+  // print to console
+  std::cout << "FirstName: " << andrey->firstName << std::endl \
+	    << "SecondName: " << andrey->secondName << std::endl \
+	    << "Age: " << andrey->age << std::endl \
+	    << "Salary: " << andrey->salary << std::endl;
+  std::cout << "Allocated memory of employee object: " \
+	    << sizeof(andrey) << "b"<< std::endl;
+  // write to file
+  const char fileName[256] = "EmployeeStruct.bin";
+  std::ofstream fstrm(fileName, std::ios_base::binary);
+  if (fstrm.is_open())
+    {
+      fstrm.write((char*)&andrey, sizeof(andrey));
+      fstrm.close();
+    }
+}
+
+void task5()
+{
+  std::cout << "##### TASK 5" << std::endl;
+  std::cout << "'Sudakov' namespace was added to task 1" << std::endl;
 }
 
 int main()
 {
   srand(time(0));
-  //  task1();
-  //  task2();
+  task1();
+  task2();
   task3();
+  task4();
+  task5();
   return 0;
 }
