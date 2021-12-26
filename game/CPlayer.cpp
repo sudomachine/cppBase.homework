@@ -1,54 +1,42 @@
 
 #pragma once
 #include "CPlayer.h"
+#include <iostream>
 
-CPlayer::CPlayer(const char* name)
+CPlayer::CPlayer(const char* name, const char side)
 {
   // constr
   m_name = name;
+  m_side = side;
 }
 CPlayer::~CPlayer()
 {
   // destr
 }
 
-void CPlayer::move()
-{
-  // func body
-}
-
-void CPlayer::setUnitToField(unsigned short fieldCell)
-{
-  // func body
-}
-
-bool CPlayer::isValidMove(unsigned short fieldCell)
-{
-  // func body
-  return true;
-}
-
 unsigned short CPlayer::getFieldCellFromPlayer()
 {
-  // func body
-  return 0;
+  unsigned short fieldCell = 0;
+  std::cout << "Enter field cell to move >> ";
+  std::cin >> fieldCell;
+  return fieldCell;
 }
 
-void CPlayer::setSide(const char side)
+const char CPlayer::getSide() const
 {
-  // func body
+  if (m_side)
+    {
+      return m_side;
+    }
+  else
+    {
+      return '?';
+    }
 }
 
-const char CPlayer::getSide()
+const char* CPlayer::getName() const
 {
-  // func body
-  return 'X';
-}
-
-const char* CPlayer::getName()
-{
-  // func body
-  return "Sudakov";
+  return m_name;
 }
 
 

@@ -8,13 +8,9 @@ class CPlayer: public IGenericPlayer
   const char* m_name;
   char m_side;
  public:
-  CPlayer(const char* name);
+  CPlayer(const char* name, const char side);
   ~CPlayer();
-  void move();
-  void setUnitToField(unsigned short fieldCell);
-  bool isValidMove(unsigned short fieldCell);
   unsigned short getFieldCellFromPlayer();
-  void setSide(const char side);
-  const char getSide();
-  const char* getName();
+  const char getSide() const;
+  const char* getName() const;
 };
