@@ -18,7 +18,7 @@ CComputer::~CComputer()
 unsigned short CComputer::getFieldCellFromPlayer()
 {
   unsigned short fieldCell = 0;
-  fieldCell = rand() % 10; // from 0 to 9
+  fieldCell = rand() % 9; // from 0 to 8
   return fieldCell;
 }
 
